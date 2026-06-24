@@ -1,0 +1,14 @@
+# Project requirements
+# Install with: pip install -r requirements.txt
+
+# This project is a frontend React + TypeScript application.
+# Python requirements file is included for compatibility with common deployment/checklist workflows.
+
+# Runtime dependencies are managed in package.json
+# See package.json for the full Node.js dependency list.
+
+# Recommended Node.js version
+nodejs>=18
+
+# Package manager
+npm>=9
