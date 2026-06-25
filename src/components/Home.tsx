@@ -168,9 +168,9 @@ export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
             </h1>
 
             <h2 className="mt-8 text-2xl md:text-3xl font-serif text-[#0F172A]">
-              25+ Years of Excellence in Criminal,
+              A legendary travel over 25 years in
               <br />
-              Civil & Appellate Advocacy
+              legal leadership, strategy and proven effective advocacy.
             </h2>
 
             <p className="mt-8 text-lg text-slate-700 leading-relaxed">
