@@ -35,10 +35,55 @@ const pathViewMap: Record<string, ActiveView> = {
   '/corporate-lawyer-chennai': 'corporate-adr',
   '/contact': 'contact',
 };
+const pageSeoMap: Record<ActiveView, { title: string; description: string; canonical: string }> = {
+  home: {
+    title: 'KTR Law Associates | Advocate in West Mambalam, Chennai',
+    description:
+      'KTR Law Associates is an advocate office in West Mambalam, Chennai, serving T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas.',
+    canonical: 'https://ktrlawassociates.in/',
+  },
+  about: {
+    title: 'About KTR Law Associates | Advocate in Chennai',
+    description:
+      'Learn about KTR Law Associates, an advocate office in Chennai with legal practice across criminal, civil, property, corporate, arbitration and appellate matters.',
+    canonical: 'https://ktrlawassociates.in/about',
+  },
+  civil: {
+    title: 'Civil Lawyer in Chennai | KTR Law Associates',
+    description:
+      'Contact KTR Law Associates for civil litigation, property disputes, partition matters, injunctions, recovery matters and civil court representation in Chennai.',
+    canonical: 'https://ktrlawassociates.in/civil-lawyer-chennai',
+  },
+  criminal: {
+    title: 'Criminal Advocate in Chennai | KTR Law Associates',
+    description:
+      'KTR Law Associates handles criminal litigation, bail matters, trial defence, police station related matters and court representation in Chennai.',
+    canonical: 'https://ktrlawassociates.in/criminal-lawyer-chennai',
+  },
+  prosecutor: {
+    title: 'Advocate Profile | KTR Law Associates Chennai',
+    description:
+      'Advocate profile and legal practice information for KTR Law Associates in Chennai.',
+    canonical: 'https://ktrlawassociates.in/prosecutor',
+  },
+  'corporate-adr': {
+    title: 'Corporate Lawyer and Arbitration Lawyer in Chennai | KTR Law Associates',
+    description:
+      'KTR Law Associates provides corporate legal advisory, arbitration, mediation, contract dispute support and ADR-related legal consultation in Chennai.',
+    canonical: 'https://ktrlawassociates.in/corporate-lawyer-chennai',
+  },
+  contact: {
+    title: 'Contact KTR Law Associates | Advocate Near Me in Chennai',
+    description:
+      'Contact KTR Law Associates for legal consultation near West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and Chennai.',
+    canonical: 'https://ktrlawassociates.in/contact',
+  },
+};
 
 export default function App() {
   const [activeView, setActiveView] = useState<ActiveView>('home');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  
   useEffect(() => {
   const currentPath = window.location.pathname;
   const matchedView = pathViewMap[currentPath];
@@ -59,6 +104,39 @@ export default function App() {
     window.removeEventListener('popstate', handlePopState);
   };
 }, []);
+
+useEffect(() => {
+  const seo = pageSeoMap[activeView];
+
+  if (!seo) return;
+
+  document.title = seo.title;
+
+  let metaDescription = document.querySelector('meta[name="description"]');
+  if (!metaDescription) {
+    metaDescription = document.createElement('meta');
+    metaDescription.setAttribute('name', 'description');
+    document.head.appendChild(metaDescription);
+  }
+  metaDescription.setAttribute('content', seo.description);
+
+  let canonicalLink = document.querySelector('link[rel="canonical"]');
+  if (!canonicalLink) {
+    canonicalLink = document.createElement('link');
+    canonicalLink.setAttribute('rel', 'canonical');
+    document.head.appendChild(canonicalLink);
+  }
+  canonicalLink.setAttribute('href', seo.canonical);
+
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle) ogTitle.setAttribute('content', seo.title);
+
+  const ogDescription = document.querySelector('meta[property="og:description"]');
+  if (ogDescription) ogDescription.setAttribute('content', seo.description);
+
+  const ogUrl = document.querySelector('meta[property="og:url"]');
+  if (ogUrl) ogUrl.setAttribute('content', seo.canonical);
+}, [activeView]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
