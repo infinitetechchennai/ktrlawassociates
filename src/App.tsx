@@ -220,8 +220,8 @@ useEffect(() => {
               </div>
               
               <p className="text-xs text-slate-400 leading-relaxed font-normal tracking-wide max-w-sm">
-                Senior independent advocate practicing since 2001 before the Madras High Court, City Civil Courts, and Sessions forums. Distinguished for meticulous preparations, robust cross-examinations, and ethical trial defense.
-              </p>
+  KTR Law Associates is an advocate office in West Mambalam, Chennai, providing legal consultation for civil, criminal, property, corporate, arbitration and appellate matters. Serving clients from West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas.
+</p>
               
               <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded bg-amber-500/5 border border-amber-500/10 text-[11px] text-amber-400 font-medium tracking-wider font-mono uppercase">
                 <ShieldCheck className="h-3.5 w-3.5 text-amber-400/80" />
@@ -279,16 +279,16 @@ useEffect(() => {
                     onClick={() => navigateTo('civil')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
                   >
-                    Civil Litigation & Property Disputes
+                    Civil Lawyer in Chennai & Property Disputes
                   </button>
                 </li>
                 <li>
                   <button 
-                    onClick={() => navigateTo('criminal')} 
-                    className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
-                  >
-                    Criminal Trial Representation & Bail
-                  </button>
+  onClick={() => navigateTo('criminal')} 
+  className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
+>
+  Criminal Advocate in Chennai & Bail Matters
+</button>
                 </li>
                 
                 {/* TEMPORARILY REMOVED PUBLIC PROSECUTOR LINK */}
@@ -306,7 +306,7 @@ useEffect(() => {
                     onClick={() => navigateTo('corporate-adr')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
                   >
-                    Corporate Advisory & Arbitration
+                    Corporate Lawyer & Arbitration Lawyer in Chennai
                   </button>
                 </li>
               </ul>
@@ -330,10 +330,16 @@ useEffect(() => {
   <p className="text-slate-200 font-medium">Direct Contact</p>
 
   <div className="flex flex-wrap items-center gap-5 text-base font-medium text-slate-400 tracking-wide">
-    {siteContent.contact.phoneNumbers.map((phone) => (
-      <span key={phone}>{phone}</span>
-    ))}
-  </div>
+  {siteContent.contact.phoneNumbers.map((phone) => (
+    <a
+      key={phone}
+      href={`tel:${phone.replace(/[^\d+]/g, '')}`}
+      className="hover:text-amber-400 transition-colors"
+    >
+      {phone}
+    </a>
+  ))}
+</div>
 </div>
             </div>
 
@@ -351,6 +357,11 @@ useEffect(() => {
           <div className="h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent my-8"></div>
 
           {/* Subfooter */}
+          <div className="rounded-lg border border-amber-500/10 bg-slate-900/50 p-5 text-center mb-8">
+  <p className="text-xs sm:text-sm text-slate-400 leading-7">
+    Local legal consultation in West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas for clients searching for advocate near me, lawyer near me, civil lawyer near me, criminal advocate near me and law offices near me.
+  </p>
+</div>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500 tracking-wide">
             <p className="text-center sm:text-left leading-relaxed">
               © 2026 {siteContent.brand.fullName}. All Rights Reserved. <br className="sm:hidden" />
