@@ -6,6 +6,26 @@
   </url>
 
   <url>
+    <loc>https://ktrlawassociates.in/about</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://ktrlawassociates.in/civil-lawyer-chennai</loc>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://ktrlawassociates.in/criminal-lawyer-chennai</loc>
+    <priority>0.95</priority>
+  </url>
+
+  <url>
+    <loc>https://ktrlawassociates.in/corporate-lawyer-chennai</loc>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
     <loc>https://ktrlawassociates.in/contact</loc>
     <priority>0.95</priority>
   </url>

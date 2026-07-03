@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ActiveView } from './types';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -16,24 +16,68 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { siteContent } from './config/siteContent';
+const viewPathMap: Record<ActiveView, string> = {
+  home: '/',
+  about: '/about',
+  civil: '/civil-lawyer-chennai',
+  criminal: '/criminal-lawyer-chennai',
+  prosecutor: '/prosecutor',
+  'corporate-adr': '/corporate-lawyer-chennai',
+  contact: '/contact',
+};
+
+const pathViewMap: Record<string, ActiveView> = {
+  '/': 'home',
+  '/about': 'about',
+  '/civil-lawyer-chennai': 'civil',
+  '/criminal-lawyer-chennai': 'criminal',
+  '/prosecutor': 'prosecutor',
+  '/corporate-lawyer-chennai': 'corporate-adr',
+  '/contact': 'contact',
+};
 
 export default function App() {
   const [activeView, setActiveView] = useState<ActiveView>('home');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
+  useEffect(() => {
+  const currentPath = window.location.pathname;
+  const matchedView = pathViewMap[currentPath];
+
+  if (matchedView) {
+    setActiveView(matchedView);
+  }
+
+  const handlePopState = () => {
+    const newPath = window.location.pathname;
+    setActiveView(pathViewMap[newPath] || 'home');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  window.addEventListener('popstate', handlePopState);
+
+  return () => {
+    window.removeEventListener('popstate', handlePopState);
+  };
+}, []);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const navigateTo = (view: ActiveView) => {
+  setActiveView(view);
+  window.history.pushState({}, '', viewPathMap[view] || '/');
+  handleScrollToTop();
+};
+
   const handleNavigateToContact = () => {
-    setActiveView('contact');
-    handleScrollToTop();
-  };
+  navigateTo('contact');
+};
 
   const renderActiveView = () => {
     switch (activeView) {
       case 'home':
-        return <Home setActiveView={setActiveView} onOpenConsultation={() => setIsConsultationOpen(true)} />;
+        return <Home setActiveView={navigateTo} onOpenConsultation={() => setIsConsultationOpen(true)} />;
       case 'about':
         return <AboutUs />;
       case 'civil':
@@ -42,13 +86,13 @@ export default function App() {
         return <CriminalLaw />;
       // Temporarily falling back to Home until profile updates are finalized
       case 'prosecutor':
-        return <Home setActiveView={setActiveView} onOpenConsultation={() => setIsConsultationOpen(true)} />;
+        return <Home setActiveView={navigateTo} onOpenConsultation={() => setIsConsultationOpen(true)} />;
       case 'corporate-adr':
         return <CorporateADR />;
       case 'contact':
         return <ContactUs />;
       default:
-        return <Home setActiveView={setActiveView} onOpenConsultation={() => setIsConsultationOpen(true)} />;
+        return <Home setActiveView={navigateTo} onOpenConsultation={() => setIsConsultationOpen(true)} />;
     }
   };
 
@@ -59,10 +103,9 @@ export default function App() {
       {/* Note: If the Prosecutor link is also hardcoded inside your <Navbar /> component, you will want to comment it out there too! */}
       <Navbar 
   activeView={activeView} 
-  setActiveView={setActiveView} 
+  setActiveView={navigateTo} 
   onOpenConsultation={() => {
-    setActiveView('contact');
-    handleScrollToTop();
+    navigateTo('contact');
   }} 
 />
 
@@ -119,7 +162,7 @@ export default function App() {
               <ul className="space-y-3 text-xs text-slate-400 font-medium">
                 <li>
                   <button 
-                    onClick={() => { setActiveView('home'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('home')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
                   >
                     Home Overview
@@ -127,7 +170,7 @@ export default function App() {
                 </li>
                 <li>
                   <button 
-                    onClick={() => { setActiveView('about'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('about')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
                   >
                     About Journey
@@ -135,7 +178,7 @@ export default function App() {
                 </li>
                 <li>
                   <button 
-                    onClick={() => { setActiveView('contact'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('contact')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
                   >
                     Contact Office
@@ -155,7 +198,7 @@ export default function App() {
               <ul className="space-y-3 text-xs text-slate-400 font-medium">
                 <li>
                   <button 
-                    onClick={() => { setActiveView('civil'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('civil')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
                   >
                     Civil Litigation & Property Disputes
@@ -163,7 +206,7 @@ export default function App() {
                 </li>
                 <li>
                   <button 
-                    onClick={() => { setActiveView('criminal'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('criminal')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
                   >
                     Criminal Trial Representation & Bail
@@ -182,7 +225,7 @@ export default function App() {
 
                 <li>
                   <button 
-                    onClick={() => { setActiveView('corporate-adr'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('corporate-adr')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
                   >
                     Corporate Advisory & Arbitration
