@@ -8,6 +8,7 @@ import CriminalLaw from './components/CriminalLaw';
 // Temporarily hidden
 // import Prosecutor from './components/Prosecutor';
 import CorporateADR from './components/CorporateADR';
+import AreasServed from './components/AreasServed';
 import ContactUs from './components/ContactUs';
 import BookConsultationModal from './components/BookConsultationModal';
 
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { siteContent } from './config/siteContent';
+
 const viewPathMap: Record<ActiveView, string> = {
   home: '/',
   about: '/about',
@@ -23,6 +25,7 @@ const viewPathMap: Record<ActiveView, string> = {
   criminal: '/criminal-lawyer-chennai',
   prosecutor: '/prosecutor',
   'corporate-adr': '/corporate-lawyer-chennai',
+  'areas-served': '/areas-served',
   contact: '/contact',
 };
 
@@ -33,8 +36,10 @@ const pathViewMap: Record<string, ActiveView> = {
   '/criminal-lawyer-chennai': 'criminal',
   '/prosecutor': 'prosecutor',
   '/corporate-lawyer-chennai': 'corporate-adr',
+  '/areas-served': 'areas-served',
   '/contact': 'contact',
 };
+
 const pageSeoMap: Record<ActiveView, { title: string; description: string; canonical: string }> = {
   home: {
     title: 'KTR Law Associates | Advocate in West Mambalam, Chennai',
@@ -72,6 +77,12 @@ const pageSeoMap: Record<ActiveView, { title: string; description: string; canon
       'KTR Law Associates provides corporate legal advisory, arbitration, mediation, contract dispute support and ADR-related legal consultation in Chennai.',
     canonical: 'https://ktrlawassociates.in/corporate-lawyer-chennai',
   },
+  'areas-served': {
+    title: 'Areas Served | Advocate Near Me in West Mambalam, Chennai',
+    description:
+      'KTR Law Associates serves clients from West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas for civil, criminal, property, corporate and arbitration matters.',
+    canonical: 'https://ktrlawassociates.in/areas-served',
+  },
   contact: {
     title: 'Contact KTR Law Associates | Advocate Near Me in Chennai',
     description:
@@ -83,74 +94,74 @@ const pageSeoMap: Record<ActiveView, { title: string; description: string; canon
 export default function App() {
   const [activeView, setActiveView] = useState<ActiveView>('home');
   const [isConsultationOpen, setIsConsultationOpen] = useState(false);
-  
+
   useEffect(() => {
-  const currentPath = window.location.pathname;
-  const matchedView = pathViewMap[currentPath];
+    const currentPath = window.location.pathname;
+    const matchedView = pathViewMap[currentPath];
 
-  if (matchedView) {
-    setActiveView(matchedView);
-  }
+    if (matchedView) {
+      setActiveView(matchedView);
+    }
 
-  const handlePopState = () => {
-    const newPath = window.location.pathname;
-    setActiveView(pathViewMap[newPath] || 'home');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+    const handlePopState = () => {
+      const newPath = window.location.pathname;
+      setActiveView(pathViewMap[newPath] || 'home');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
-  window.addEventListener('popstate', handlePopState);
+    window.addEventListener('popstate', handlePopState);
 
-  return () => {
-    window.removeEventListener('popstate', handlePopState);
-  };
-}, []);
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
-useEffect(() => {
-  const seo = pageSeoMap[activeView];
+  useEffect(() => {
+    const seo = pageSeoMap[activeView];
 
-  if (!seo) return;
+    if (!seo) return;
 
-  document.title = seo.title;
+    document.title = seo.title;
 
-  let metaDescription = document.querySelector('meta[name="description"]');
-  if (!metaDescription) {
-    metaDescription = document.createElement('meta');
-    metaDescription.setAttribute('name', 'description');
-    document.head.appendChild(metaDescription);
-  }
-  metaDescription.setAttribute('content', seo.description);
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', seo.description);
 
-  let canonicalLink = document.querySelector('link[rel="canonical"]');
-  if (!canonicalLink) {
-    canonicalLink = document.createElement('link');
-    canonicalLink.setAttribute('rel', 'canonical');
-    document.head.appendChild(canonicalLink);
-  }
-  canonicalLink.setAttribute('href', seo.canonical);
+    let canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalLink);
+    }
+    canonicalLink.setAttribute('href', seo.canonical);
 
-  const ogTitle = document.querySelector('meta[property="og:title"]');
-  if (ogTitle) ogTitle.setAttribute('content', seo.title);
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', seo.title);
 
-  const ogDescription = document.querySelector('meta[property="og:description"]');
-  if (ogDescription) ogDescription.setAttribute('content', seo.description);
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) ogDescription.setAttribute('content', seo.description);
 
-  const ogUrl = document.querySelector('meta[property="og:url"]');
-  if (ogUrl) ogUrl.setAttribute('content', seo.canonical);
-}, [activeView]);
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) ogUrl.setAttribute('content', seo.canonical);
+  }, [activeView]);
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const navigateTo = (view: ActiveView) => {
-  setActiveView(view);
-  window.history.pushState({}, '', viewPathMap[view] || '/');
-  handleScrollToTop();
-};
+    setActiveView(view);
+    window.history.pushState({}, '', viewPathMap[view] || '/');
+    handleScrollToTop();
+  };
 
   const handleNavigateToContact = () => {
-  navigateTo('contact');
-};
+    navigateTo('contact');
+  };
 
   const renderActiveView = () => {
     switch (activeView) {
@@ -162,11 +173,12 @@ useEffect(() => {
         return <CivilLaw />;
       case 'criminal':
         return <CriminalLaw />;
-      // Temporarily falling back to Home until profile updates are finalized
       case 'prosecutor':
         return <Home setActiveView={navigateTo} onOpenConsultation={() => setIsConsultationOpen(true)} />;
       case 'corporate-adr':
         return <CorporateADR />;
+      case 'areas-served':
+        return <AreasServed />;
       case 'contact':
         return <ContactUs />;
       default:
@@ -177,17 +189,14 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-parchment flex flex-col justify-between relative" id="app-body-container">
       
-      {/* 1. Navbar */}
-      {/* Note: If the Prosecutor link is also hardcoded inside your <Navbar /> component, you will want to comment it out there too! */}
       <Navbar 
-  activeView={activeView} 
-  setActiveView={navigateTo} 
-  onOpenConsultation={() => {
-    navigateTo('contact');
-  }} 
-/>
+        activeView={activeView} 
+        setActiveView={navigateTo} 
+        onOpenConsultation={() => {
+          navigateTo('contact');
+        }} 
+      />
 
-      {/* 2. Main content view rendering */}
       <main className="flex-grow">
         <AnimatePresence mode="wait">
           <motion.div
@@ -202,26 +211,24 @@ useEffect(() => {
         </AnimatePresence>
       </main>
 
-      {/* 3. Premium Architectural Footer */}
       <footer className="bg-gradient-to-b from-slate-950 to-neutral-950 text-slate-100 border-t border-amber-500/20 font-sans mt-auto" id="app-gorgeous-footer">
-        
         <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 py-16">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-12 lg:gap-16">
             
-            {/* Column 1: Brand Profile */}
             <div className="md:col-span-5 space-y-5">
               <div className="flex items-center space-x-3.5">
                 <div className="p-2 bg-gradient-to-br from-amber-500/10 to-amber-600/20 rounded-md border border-amber-500/30 shadow-inner">
                   <Scale className="h-5 w-5 text-amber-400" />
                 </div>
+
                 <span className="font-serif text-lg font-medium tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-100 to-amber-300 uppercase">
                   {siteContent.brand.fullName}
                 </span>
               </div>
               
               <p className="text-xs text-slate-400 leading-relaxed font-normal tracking-wide max-w-sm">
-  KTR Law Associates is an advocate office in West Mambalam, Chennai, providing legal consultation for civil, criminal, property, corporate, arbitration and appellate matters. Serving clients from West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas.
-</p>
+                KTR Law Associates is an advocate office in West Mambalam, Chennai, providing legal consultation for civil, criminal, property, corporate, arbitration and appellate matters. Serving clients from West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas.
+              </p>
               
               <div className="inline-flex items-center space-x-2 px-3 py-1.5 rounded bg-amber-500/5 border border-amber-500/10 text-[11px] text-amber-400 font-medium tracking-wider font-mono uppercase">
                 <ShieldCheck className="h-3.5 w-3.5 text-amber-400/80" />
@@ -229,7 +236,6 @@ useEffect(() => {
               </div>
             </div>
 
-            {/* Column 2: Navigation Links */}
             <div className="md:col-span-3 space-y-4">
               <div className="flex items-center space-x-2">
                 <div className="w-1 h-3.5 bg-amber-500/70 rounded-full"></div>
@@ -237,6 +243,7 @@ useEffect(() => {
                   Quick Navigation
                 </h4>
               </div>
+
               <ul className="space-y-3 text-xs text-slate-400 font-medium">
                 <li>
                   <button 
@@ -246,6 +253,7 @@ useEffect(() => {
                     Home Overview
                   </button>
                 </li>
+
                 <li>
                   <button 
                     onClick={() => navigateTo('about')} 
@@ -254,6 +262,16 @@ useEffect(() => {
                     About Journey
                   </button>
                 </li>
+
+                <li>
+                  <button 
+                    onClick={() => navigateTo('areas-served')} 
+                    className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
+                  >
+                    Areas Served
+                  </button>
+                </li>
+
                 <li>
                   <button 
                     onClick={() => navigateTo('contact')} 
@@ -265,7 +283,6 @@ useEffect(() => {
               </ul>
             </div>
 
-            {/* Column 3: Services Links */}
             <div className="md:col-span-4 space-y-4">
               <div className="flex items-center space-x-2">
                 <div className="w-1 h-3.5 bg-amber-500/70 rounded-full"></div>
@@ -273,6 +290,7 @@ useEffect(() => {
                   Law Services Portfolio
                 </h4>
               </div>
+
               <ul className="space-y-3 text-xs text-slate-400 font-medium">
                 <li>
                   <button 
@@ -282,24 +300,15 @@ useEffect(() => {
                     Civil Lawyer in Chennai & Property Disputes
                   </button>
                 </li>
+
                 <li>
                   <button 
-  onClick={() => navigateTo('criminal')} 
-  className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
->
-  Criminal Advocate in Chennai & Bail Matters
-</button>
-                </li>
-                
-                {/* TEMPORARILY REMOVED PUBLIC PROSECUTOR LINK */}
-                {/* <li>
-                  <button 
-                    onClick={() => { setActiveView('prosecutor'); handleScrollToTop(); }} 
+                    onClick={() => navigateTo('criminal')} 
                     className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none text-left"
                   >
-                    City Public Prosecutor Profile
+                    Criminal Advocate in Chennai & Bail Matters
                   </button>
-                </li> */}
+                </li>
 
                 <li>
                   <button 
@@ -311,10 +320,8 @@ useEffect(() => {
                 </li>
               </ul>
             </div>
-
           </div>
 
-          {/* Contact Bar Strip */}
           <div className="mt-12 pt-8 border-t border-slate-900 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-900/50 transition-colors duration-200">
               <MapPin className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
@@ -327,27 +334,30 @@ useEffect(() => {
             <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-900/50 transition-colors duration-200">
               <Phone className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
               <div className="text-xs space-y-1">
-  <p className="text-slate-200 font-medium">Direct Contact</p>
+                <p className="text-slate-200 font-medium">Direct Contact</p>
 
-  <div className="flex flex-wrap items-center gap-5 text-base font-medium text-slate-400 tracking-wide">
-  {siteContent.contact.phoneNumbers.map((phone) => (
-    <a
-      key={phone}
-      href={`tel:${phone.replace(/[^\d+]/g, '')}`}
-      className="hover:text-amber-400 transition-colors"
-    >
-      {phone}
-    </a>
-  ))}
-</div>
-</div>
+                <div className="flex flex-wrap items-center gap-5 text-base font-medium text-slate-400 tracking-wide">
+                  {siteContent.contact.phoneNumbers.map((phone) => (
+                    <a
+                      key={phone}
+                      href={`tel:${phone.replace(/[^\d+]/g, '')}`}
+                      className="hover:text-amber-400 transition-colors"
+                    >
+                      {phone}
+                    </a>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div className="flex items-start space-x-3 p-3 rounded-lg hover:bg-slate-900/50 transition-colors duration-200 sm:col-span-2 lg:col-span-1">
               <Mail className="h-4 w-4 text-amber-500 mt-0.5 flex-shrink-0" />
               <div className="text-xs space-y-0.5">
                 <p className="text-slate-200 font-medium">Email Correspondence</p>
-                <a href={siteContent.contact.emailHref} className="text-slate-400 hover:text-amber-400 transition-colors duration-200 block font-mono">
+                <a 
+                  href={siteContent.contact.emailHref} 
+                  className="text-slate-400 hover:text-amber-400 transition-colors duration-200 block font-mono"
+                >
                   {siteContent.contact.email}
                 </a>
               </div>
@@ -356,17 +366,18 @@ useEffect(() => {
 
           <div className="h-px bg-gradient-to-r from-transparent via-slate-800 to-transparent my-8"></div>
 
-          {/* Subfooter */}
           <div className="rounded-lg border border-amber-500/10 bg-slate-900/50 p-5 text-center mb-8">
-  <p className="text-xs sm:text-sm text-slate-400 leading-7">
-    Local legal consultation in West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas for clients searching for advocate near me, lawyer near me, civil lawyer near me, criminal advocate near me and law offices near me.
-  </p>
-</div>
+            <p className="text-xs sm:text-sm text-slate-400 leading-7">
+              Local legal consultation in West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas for clients searching for advocate near me, lawyer near me, civil lawyer near me, criminal advocate near me and law offices near me.
+            </p>
+          </div>
+
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500 tracking-wide">
             <p className="text-center sm:text-left leading-relaxed">
               © 2026 {siteContent.brand.fullName}. All Rights Reserved. <br className="sm:hidden" />
               <span className="hidden sm:inline">|</span> {siteContent.brand.footerNote}
             </p>
+
             <button
               onClick={handleScrollToTop}
               className="group flex items-center space-x-2 px-4 py-2 rounded-md bg-slate-900/80 border border-slate-800 hover:border-amber-500/30 hover:bg-amber-500/5 text-slate-400 hover:text-amber-400 transition-all duration-200 focus:outline-none shadow-sm"
@@ -375,11 +386,9 @@ useEffect(() => {
               <ArrowUp className="h-3.5 w-3.5 transform group-hover:-translate-y-0.5 transition-transform duration-200" />
             </button>
           </div>
-
         </div>
       </footer>
 
-      {/* 4. Floating Action Counsel Widget (Matching image_7ff981.png) */}
       <div 
         className="fixed bottom-6 right-6 z-50 flex items-center group cursor-pointer" 
         onClick={handleNavigateToContact}
@@ -404,12 +413,10 @@ useEffect(() => {
         </motion.div>
       </div>
 
-      {/* 5. Consultation Scheduler Modal Overlay */}
       <BookConsultationModal 
         isOpen={isConsultationOpen} 
         onClose={() => setIsConsultationOpen(false)} 
       />
-
     </div>
   );
 }

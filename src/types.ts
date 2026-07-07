@@ -5,6 +5,7 @@ export type ActiveView =
   | 'criminal' 
   | 'prosecutor' 
   | 'corporate-adr' 
+  | 'areas-served'
   | 'contact';
 
 export interface TrustIndicator {
