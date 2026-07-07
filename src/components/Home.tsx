@@ -403,17 +403,17 @@ export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
                 <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
                 
                 <video
-                  ref={videoRef}
-                  src={advocateMedia}
-                  muted
-                  loop
-                  playsInline
-                  controls
-                  preload="auto"
-                  className="w-full aspect-video object-cover"
-                >
-                  Your browser does not support the video tag.
-                </video>
+  ref={videoRef}
+  muted
+  loop
+  playsInline
+  preload="metadata"
+  className="w-full aspect-video object-cover"
+>
+  <source src={advocateMedia} type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
               </div>
               <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
                 Broadcast Source: Thanthi TV News / Case Commentary Briefing
