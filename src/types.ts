@@ -6,6 +6,7 @@ export type ActiveView =
   | 'prosecutor' 
   | 'corporate-adr' 
   | 'areas-served'
+  | 'advocate-profile'
   | 'contact';
 
 export interface TrustIndicator {

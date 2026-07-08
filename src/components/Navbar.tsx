@@ -64,7 +64,6 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
     <nav className="sticky top-0 z-50 bg-navy-900 text-white border-b border-gold-800/40 shadow-xl" id="main-has-id-navbar">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Logo Brand left side */}
           <div
             onClick={() => handleNavClick('home')}
             className="flex items-center space-x-3 cursor-pointer group"
@@ -85,7 +84,6 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center space-x-6" id="desktop-menu-links">
             <button
               onClick={() => handleNavClick('home')}
@@ -106,6 +104,15 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
             </button>
 
             <button
+              onClick={() => handleNavClick('advocate-profile')}
+              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+                activeView === 'advocate-profile' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
+              }`}
+            >
+              Advocate
+            </button>
+
+            <button
               onClick={() => handleNavClick('areas-served')}
               className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
                 activeView === 'areas-served' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
@@ -114,7 +121,6 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
               Areas Served
             </button>
 
-            {/* Custom Law Services Dropdown */}
             <div
               className="relative"
               onMouseEnter={() => setIsServicesDropdownOpen(true)}
@@ -183,7 +189,6 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
             </button>
           </div>
 
-          {/* Right Side: Call to Action & Number */}
           <div className="hidden lg:flex items-center space-x-6" id="nav-right-cta">
             <a
               href={siteContent.contact.phoneLinks[0]}
@@ -213,7 +218,6 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <div className="flex lg:hidden items-center space-x-3">
             <a
               href={siteContent.contact.phoneLinks[0]}
@@ -234,7 +238,6 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
         </div>
       </div>
 
-      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -293,13 +296,23 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
               </button>
 
               <button
+                onClick={() => handleNavClick('advocate-profile')}
+                className={`w-full text-left font-serif text-2xl tracking-wide pb-3 border-b border-slate-800 flex justify-between items-center transition-colors ${
+                  activeView === 'advocate-profile' ? 'text-gold-500 font-semibold' : 'text-slate-200'
+                }`}
+              >
+                <span>Advocate K. Thangarasu</span>
+                <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">03</span>
+              </button>
+
+              <button
                 onClick={() => handleNavClick('areas-served')}
                 className={`w-full text-left font-serif text-2xl tracking-wide pb-3 border-b border-slate-800 flex justify-between items-center transition-colors ${
                   activeView === 'areas-served' ? 'text-gold-500 font-semibold' : 'text-slate-200'
                 }`}
               >
                 <span>Areas Served</span>
-                <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">03</span>
+                <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">04</span>
               </button>
 
               <div className="border-b border-slate-800 pb-3">
@@ -312,7 +325,7 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
                   </span>
 
                   <div className="flex items-center space-x-2">
-                    <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">04</span>
+                    <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">05</span>
                     {isMobileServicesOpen ? (
                       <ChevronUp className="h-5 w-5 text-gold-500" />
                     ) : (
@@ -361,7 +374,7 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
                 }`}
               >
                 <span>Contact Office</span>
-                <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">05</span>
+                <span className="text-[10px] font-mono tracking-widest text-gold-500 uppercase">06</span>
               </button>
             </div>
 

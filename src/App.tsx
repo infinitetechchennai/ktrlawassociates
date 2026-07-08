@@ -9,6 +9,7 @@ import CriminalLaw from './components/CriminalLaw';
 // import Prosecutor from './components/Prosecutor';
 import CorporateADR from './components/CorporateADR';
 import AreasServed from './components/AreasServed';
+import AdvocateProfile from './components/AdvocateProfile';
 import ContactUs from './components/ContactUs';
 import BookConsultationModal from './components/BookConsultationModal';
 
@@ -26,7 +27,8 @@ const viewPathMap: Record<ActiveView, string> = {
   prosecutor: '/prosecutor',
   'corporate-adr': '/corporate-lawyer-chennai',
   'areas-served': '/areas-served',
-  contact: '/contact',
+'advocate-profile': '/advocate-k-thangarasu',
+contact: '/contact',
 };
 
 const pathViewMap: Record<string, ActiveView> = {
@@ -37,7 +39,8 @@ const pathViewMap: Record<string, ActiveView> = {
   '/prosecutor': 'prosecutor',
   '/corporate-lawyer-chennai': 'corporate-adr',
   '/areas-served': 'areas-served',
-  '/contact': 'contact',
+'/advocate-k-thangarasu': 'advocate-profile',
+'/contact': 'contact',
 };
 
 const pageSeoMap: Record<ActiveView, { title: string; description: string; canonical: string }> = {
@@ -78,12 +81,18 @@ const pageSeoMap: Record<ActiveView, { title: string; description: string; canon
     canonical: 'https://ktrlawassociates.in/corporate-lawyer-chennai',
   },
   'areas-served': {
-    title: 'Areas Served | Advocate Near Me in West Mambalam, Chennai',
-    description:
-      'KTR Law Associates serves clients from West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas for civil, criminal, property, corporate and arbitration matters.',
-    canonical: 'https://ktrlawassociates.in/areas-served',
-  },
-  contact: {
+  title: 'Areas Served | Advocate Near Me in West Mambalam, Chennai',
+  description:
+    'KTR Law Associates serves clients from West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and nearby Chennai areas for civil, criminal, property, corporate and arbitration matters.',
+  canonical: 'https://ktrlawassociates.in/areas-served',
+},
+'advocate-profile': {
+  title: 'Advocate K. Thangarasu | KTR Law Associates Chennai',
+  description:
+    'Advocate K. Thangarasu is associated with KTR Law Associates in West Mambalam, Chennai, providing legal consultation in civil, criminal, property, corporate, arbitration, cheque bounce and appellate matters.',
+  canonical: 'https://ktrlawassociates.in/advocate-k-thangarasu',
+},
+contact: {
     title: 'Contact KTR Law Associates | Advocate Near Me in Chennai',
     description:
       'Contact KTR Law Associates for legal consultation near West Mambalam, T. Nagar, Saidapet, Ashok Nagar, Kodambakkam, Nungambakkam, Ramapuram and Chennai.',
@@ -178,9 +187,11 @@ export default function App() {
       case 'corporate-adr':
         return <CorporateADR />;
       case 'areas-served':
-        return <AreasServed />;
-      case 'contact':
-        return <ContactUs />;
+  return <AreasServed />;
+case 'advocate-profile':
+  return <AdvocateProfile />;
+case 'contact':
+  return <ContactUs />;
       default:
         return <Home setActiveView={navigateTo} onOpenConsultation={() => setIsConsultationOpen(true)} />;
     }
@@ -245,42 +256,51 @@ export default function App() {
               </div>
 
               <ul className="space-y-3 text-xs text-slate-400 font-medium">
-                <li>
-                  <button 
-                    onClick={() => navigateTo('home')} 
-                    className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
-                  >
-                    Home Overview
-                  </button>
-                </li>
+  <li>
+    <button 
+      onClick={() => navigateTo('home')} 
+      className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
+    >
+      Home Overview
+    </button>
+  </li>
 
-                <li>
-                  <button 
-                    onClick={() => navigateTo('about')} 
-                    className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
-                  >
-                    About Journey
-                  </button>
-                </li>
+  <li>
+    <button 
+      onClick={() => navigateTo('about')} 
+      className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
+    >
+      About Journey
+    </button>
+  </li>
 
-                <li>
-                  <button 
-                    onClick={() => navigateTo('areas-served')} 
-                    className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
-                  >
-                    Areas Served
-                  </button>
-                </li>
+  <li>
+    <button 
+      onClick={() => navigateTo('advocate-profile')} 
+      className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
+    >
+      Advocate K. Thangarasu
+    </button>
+  </li>
 
-                <li>
-                  <button 
-                    onClick={() => navigateTo('contact')} 
-                    className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
-                  >
-                    Contact Office
-                  </button>
-                </li>
-              </ul>
+  <li>
+    <button 
+      onClick={() => navigateTo('areas-served')} 
+      className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
+    >
+      Areas Served
+    </button>
+  </li>
+
+  <li>
+    <button 
+      onClick={() => navigateTo('contact')} 
+      className="hover:text-amber-300 transition-colors duration-200 hover:underline decoration-amber-500/40 underline-offset-4 focus:outline-none"
+    >
+      Contact Office
+    </button>
+  </li>
+</ul>
             </div>
 
             <div className="md:col-span-4 space-y-4">
