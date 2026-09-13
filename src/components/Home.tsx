@@ -1,7 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ActiveView } from '../types';
-import { 
-  ArrowRight, CheckCircle2, ChevronDown, ChevronUp, Calendar, Phone, Briefcase, HelpCircle, Play
+
+import {
+  ArrowRight,
+  CheckCircle2,
+  ChevronDown,
+  ChevronUp,
+  Calendar,
+  Phone,
+  Briefcase,
+  HelpCircle,
+  Play
 } from 'lucide-react';
 
 // Correct local bundle imports matching your VS Code explorer structure
@@ -9,8 +18,12 @@ import {
 import heroLaw from '../assets/images/hero-law.jpg';
 // @ts-ignore
 import advocatePortrait from '../assets/images/WhatsApp Image 2026-06-22 at 5.11.45 PM.jpeg';
+
 // @ts-ignore
 import advocateMedia from '../assets/WhatsApp Video 2026-06-23 at 3.20.49 PM.mp4';
+
+// @ts-ignore
+import newAdvocateMedia from '../assets/WhatsApp Video 2026-09-12 at 5.24.33 PM.mp4';
 
 interface HomeProps {
   setActiveView: (view: ActiveView) => void;
@@ -18,9 +31,39 @@ interface HomeProps {
 }
 
 export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-  const videoSectionRef = useRef<HTMLDivElement | null>(null);
+const [openFaq, setOpenFaq] = useState<number | null>(null);
+const [activeBriefing, setActiveBriefing] = useState(0);
+
+
+const videoRef = useRef<HTMLVideoElement | null>(null);
+const videoSectionRef = useRef<HTMLDivElement | null>(null);
+
+const briefingVideos = [
+  {
+    title: "Regulatory Investigation Briefing",
+    subtitle: "Media Commentary • Legal Perspective",
+    description:
+      "A focused legal briefing addressing documentary accountability, regulatory compliance, and the importance of verified evidence during public investigations.",
+    quote:
+      "Verified documentation and disciplined legal reasoning remain central to every serious investigation.",
+    video: caseBriefingVideo,
+    label: "Briefing 01",
+  },
+  {
+    title: "Public Litigation & Case Commentary",
+    subtitle: "Legal Analysis • Public Interest",
+    description:
+      "An additional legal commentary examining procedural safeguards, responsible representation, and the role of evidence in high-stakes litigation.",
+    quote:
+      "Every legal position must be supported by facts, procedure, and a clear understanding of the law.",
+    video: caseBriefingVideo2,
+    label: "Briefing 02",
+  },
+];
+
+const currentBriefing =
+  briefingVideos[activeBriefing] ?? briefingVideos[0];
+
 
   const trustIndicators = [
     { value: "25+", label: "Years of Active Practice" },
@@ -101,50 +144,44 @@ export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
   ];
 
   // Scroll Detection Logic: Intersection Observer for Video Auto Play/Pause
-  useEffect(() => {
-    const observerOptions = {
-      root: null, // browser viewport
-      threshold: 0.4, // Triggers when 40% of the video section is visible
-    };
-
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+useEffect(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
-        if (videoRef.current) {
-          if (entry.isIntersecting) {
-            // Plays cleanly right from where it was paused
-            videoRef.current.play().catch((error) => {
-              console.log("Autoplay blocked or interrupted:", error);
-            });
-          } else {
-            // Pauses perfectly when scrolled away to Practice Areas or upward
-            videoRef.current.pause();
-          }
+        if (!videoRef.current) return;
+
+        if (entry.isIntersecting) {
+          videoRef.current.play().catch(() => {
+            console.log("Video autoplay was blocked.");
+          });
+        } else {
+          videoRef.current.pause();
         }
       });
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-    
-    if (videoSectionRef.current) {
-      observer.observe(videoSectionRef.current);
+    },
+    {
+      root: null,
+      threshold: 0.4,
     }
+  );
 
-    return () => {
-      if (videoSectionRef.current) {
-        observer.unobserve(videoSectionRef.current);
-      }
-    };
-  }, []);
+  if (videoSectionRef.current) {
+    observer.observe(videoSectionRef.current);
+  }
 
-  const handlePracticeAreaClick = (view: ActiveView) => {
-    setActiveView(view);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  return () => {
+    observer.disconnect();
   };
+}, []);
 
-  return (
-    <div className="space-y-24 pb-20 overflow-hidden" id="homepage-root">
-      
-      {/* 1. Hero Section With Full Background Image */}
+const handlePracticeAreaClick = (view: ActiveView) => {
+  setActiveView(view);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+return (
+  <>
+    {/* 1. Hero Section With Full Background Image */}
       <section
         className="relative min-h-screen flex items-center overflow-hidden"
         style={{
@@ -376,6 +413,7 @@ export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
               <div className="text-[11px] font-mono tracking-widest text-gold-600 uppercase font-semibold flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse"></span>
                 Media Commentary & Case Insights
+                
               </div>
               <h2 className="text-3xl font-serif text-navy-900 font-semibold tracking-tight">
                 Navigating High-Stakes Public Litigations
@@ -398,29 +436,54 @@ export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
             </div>
 
             {/* Right Video Player Column */}
-            <div className="lg:col-span-7 flex flex-col justify-center">
-              <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
-                
-                <video
-  ref={videoRef}
-  muted
-  loop
-  playsInline
-  preload="metadata"
-  className="w-full aspect-video object-cover"
->
-  <source src={advocateMedia} type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+<div className="lg:col-span-7 flex flex-col justify-center space-y-8">
 
-              </div>
-              <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
-                Broadcast Source: Thanthi TV News / Case Commentary Briefing
-              </span>
-            </div>
+  {/* First Video */}
+  <div>
+    <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
 
-          </div>
+      <video
+        ref={videoRef}
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        controls
+        className="w-full aspect-video object-cover"
+      >
+        <source src={advocateMedia} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
+      Broadcast Source: Thanthi TV News / Case Commentary Briefing
+    </span>
+  </div>
+
+  {/* Second Video */}
+  <div>
+    <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
+
+      <video
+        controls
+        muted
+        playsInline
+        preload="metadata"
+        className="w-full aspect-video object-cover"
+      >
+        <source src={newAdvocateMedia} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
+      New Media Commentary / Legal Briefing
+    </span>
+  </div>
+
         </div>
       </section>
 
@@ -653,8 +716,7 @@ export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
             );
           })}
         </div>
-      </section>
-
-    </div>
+           </section>
+    </>
   );
 }
