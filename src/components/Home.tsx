@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { ActiveView } from '../types';
+import { useState, useEffect, useRef } from 'react';
+import type { ActiveView } from '../types';
 
 import {
   ArrowRight,
@@ -10,20 +10,17 @@ import {
   Phone,
   Briefcase,
   HelpCircle,
-  Play
+  Play,
 } from 'lucide-react';
 
-// Correct local bundle imports matching your VS Code explorer structure
-// @ts-ignore
 import heroLaw from '../assets/images/hero-law.jpg';
-// @ts-ignore
+import courtroomChamber from '../assets/images/courtroom_chamber_scales_1782116695466.jpg';
+import courtroomOffice from '../assets/images/courtroom_office_1782114683865.jpg';
+import legalSpecialization from '../assets/images/legal_hero_specialization_1782114665579.jpg';
 import advocatePortrait from '../assets/images/WhatsApp Image 2026-06-22 at 5.11.45 PM.jpeg';
 
-// @ts-ignore
-import advocateMedia from '../assets/WhatsApp Video 2026-06-23 at 3.20.49 PM.mp4';
-
-// @ts-ignore
-import newAdvocateMedia from '../assets/WhatsApp Video 2026-09-12 at 5.24.33 PM.mp4';
+import caseBriefing from '../assets/images/case-briefing.mp4';
+import caseBriefingTwo from '../assets/images/case-briefing-2.mp4';
 
 interface HomeProps {
   setActiveView: (view: ActiveView) => void;
@@ -32,37 +29,11 @@ interface HomeProps {
 
 export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
 const [openFaq, setOpenFaq] = useState<number | null>(null);
-const [activeBriefing, setActiveBriefing] = useState(0);
 
 
 const videoRef = useRef<HTMLVideoElement | null>(null);
 const videoSectionRef = useRef<HTMLDivElement | null>(null);
 
-const briefingVideos = [
-  {
-    title: "Regulatory Investigation Briefing",
-    subtitle: "Media Commentary • Legal Perspective",
-    description:
-      "A focused legal briefing addressing documentary accountability, regulatory compliance, and the importance of verified evidence during public investigations.",
-    quote:
-      "Verified documentation and disciplined legal reasoning remain central to every serious investigation.",
-    video: caseBriefingVideo,
-    label: "Briefing 01",
-  },
-  {
-    title: "Public Litigation & Case Commentary",
-    subtitle: "Legal Analysis • Public Interest",
-    description:
-      "An additional legal commentary examining procedural safeguards, responsible representation, and the role of evidence in high-stakes litigation.",
-    quote:
-      "Every legal position must be supported by facts, procedure, and a clear understanding of the law.",
-    video: caseBriefingVideo2,
-    label: "Briefing 02",
-  },
-];
-
-const currentBriefing =
-  briefingVideos[activeBriefing] ?? briefingVideos[0];
 
 
   const trustIndicators = [
@@ -452,7 +423,7 @@ return (
         controls
         className="w-full aspect-video object-cover"
       >
-        <source src={advocateMedia} type="video/mp4" />
+        <source src={caseBriefing} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -474,7 +445,7 @@ return (
         preload="metadata"
         className="w-full aspect-video object-cover"
       >
-        <source src={newAdvocateMedia} type="video/mp4" />
+        <source src={caseBriefingTwo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -485,6 +456,8 @@ return (
   </div>
 
         </div>
+        </div>
+      </div>
       </section>
 
       {/* 5. Practice Areas (Interactive Grid & Beautiful Classic Table) */}
