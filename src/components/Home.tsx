@@ -114,36 +114,33 @@ const videoSectionRef = useRef<HTMLDivElement | null>(null);
     }
   ];
 
-  // Scroll Detection Logic: Intersection Observer for Video Auto Play/Pause
-useEffect(() => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!videoRef.current) return;
+  // Scroll Detection Logic: Automatically pause video when scrolled out of view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!videoRef.current) return;
 
-        if (entry.isIntersecting) {
-          videoRef.current.play().catch(() => {
-            console.log("Video autoplay was blocked.");
-          });
-        } else {
-          videoRef.current.pause();
-        }
-      });
-    },
-    {
-      root: null,
-      threshold: 0.4,
+          // If scrolled completely out of view, pause to stop playback
+          if (!entry.isIntersecting && !videoRef.current.paused) {
+            videoRef.current.pause();
+          }
+        });
+      },
+      {
+        root: null,
+        threshold: 0.1,
+      }
+    );
+
+    if (videoSectionRef.current) {
+      observer.observe(videoSectionRef.current);
     }
-  );
 
-  if (videoSectionRef.current) {
-    observer.observe(videoSectionRef.current);
-  }
-
-  return () => {
-    observer.disconnect();
-  };
-}, []);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
 const handlePracticeAreaClick = (view: ActiveView) => {
   setActiveView(view);
@@ -412,18 +409,18 @@ return (
   {/* First Video */}
   <div>
     <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
 
       <video
         ref={videoRef}
+        src={caseBriefing}
+        controls
         muted
         loop
         playsInline
-        preload="metadata"
-        controls
+        preload="auto"
         className="w-full aspect-video object-cover"
       >
-        <source src={caseBriefing} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
@@ -436,16 +433,16 @@ return (
   {/* Second Video */}
   <div>
     <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10"></div>
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
 
       <video
+        src={caseBriefingTwo}
         controls
         muted
         playsInline
-        preload="metadata"
+        preload="auto"
         className="w-full aspect-video object-cover"
       >
-        <source src={caseBriefingTwo} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
     </div>
