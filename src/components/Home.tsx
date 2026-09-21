@@ -21,6 +21,7 @@ import advocatePortrait from '../assets/images/WhatsApp Image 2026-06-22 at 5.11
 
 import caseBriefing from '../assets/images/case-briefing.mp4';
 import caseBriefingTwo from '../assets/images/case-briefing-2.mp4';
+import caseBriefingThree from '../assets/images/case-briefing-3.mp4';
 
 interface HomeProps {
   setActiveView: (view: ActiveView) => void;
@@ -449,6 +450,28 @@ return (
 
     <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
       New Media Commentary / Legal Briefing
+    </span>
+  </div>
+
+  {/* Third Video */}
+  <div>
+    <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
+
+      <video
+        src={caseBriefingThree}
+        controls
+        muted
+        playsInline
+        preload="auto"
+        className="w-full aspect-video object-cover"
+      >
+        Your browser does not support the video tag.
+      </video>
+    </div>
+
+    <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
+      Chamber Legal Briefing & Commentary
     </span>
   </div>
 
