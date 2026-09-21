@@ -29,12 +29,38 @@ interface HomeProps {
 }
 
 export default function Home({ setActiveView, onOpenConsultation }: HomeProps) {
-const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState(0);
 
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoSectionRef = useRef<HTMLDivElement | null>(null);
 
-const videoRef = useRef<HTMLVideoElement | null>(null);
-const videoSectionRef = useRef<HTMLDivElement | null>(null);
-
+  const mediaVideos = [
+    {
+      id: 'briefing-1',
+      title: 'Investigation & Case Commentary',
+      tag: 'News Coverage',
+      source: 'Thanthi TV News / Case Commentary Briefing',
+      src: caseBriefing,
+      duration: '4:21',
+    },
+    {
+      id: 'briefing-2',
+      title: 'Press Briefing Outside Court',
+      tag: 'Press Meet',
+      source: 'Press Briefing / Media Statement',
+      src: caseBriefingTwo,
+      duration: '0:51',
+    },
+    {
+      id: 'briefing-3',
+      title: 'Chamber Analysis & Legal Briefing',
+      tag: 'TV Broadcast',
+      source: 'Chamber Legal Briefing & Commentary',
+      src: caseBriefingThree,
+      duration: '0:57',
+    },
+  ];
 
 
   const trustIndicators = [
@@ -405,77 +431,75 @@ return (
             </div>
 
             {/* Right Video Player Column */}
-<div className="lg:col-span-7 flex flex-col justify-center space-y-8">
+            <div className="lg:col-span-7 flex flex-col justify-center space-y-4">
+              
+              {/* Master Showcase Video Player */}
+              <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
 
-  {/* First Video */}
-  <div>
-    <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
+                <video
+                  key={mediaVideos[selectedVideo].src}
+                  ref={videoRef}
+                  src={mediaVideos[selectedVideo].src}
+                  controls
+                  playsInline
+                  preload="auto"
+                  className="w-full aspect-video object-cover bg-black"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
 
-      <video
-        ref={videoRef}
-        src={caseBriefing}
-        controls
-        muted
-        loop
-        playsInline
-        preload="auto"
-        className="w-full aspect-video object-cover"
-      >
-        Your browser does not support the video tag.
-      </video>
-    </div>
+              {/* Source & Duration Bar */}
+              <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-gray-500 px-1">
+                <span className="truncate pr-2">{mediaVideos[selectedVideo].source}</span>
+                <span className="text-gold-600 font-bold whitespace-nowrap">{mediaVideos[selectedVideo].duration}</span>
+              </div>
 
-    <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
-      Broadcast Source: Thanthi TV News / Case Commentary Briefing
-    </span>
-  </div>
+              {/* 3 Selectable Video Playlist Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+                {mediaVideos.map((item, idx) => {
+                  const isActive = selectedVideo === idx;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setSelectedVideo(idx)}
+                      className={`text-left p-3.5 rounded-lg border transition-all duration-200 flex flex-col justify-between cursor-pointer ${
+                        isActive
+                          ? 'bg-[#07101f] border-gold-500 shadow-md ring-1 ring-gold-500/50 text-white'
+                          : 'bg-white hover:bg-gold-50/50 border-gold-200/80 text-navy-900 shadow-sm hover:border-gold-400/60'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between w-full mb-1.5">
+                        <span className={`text-[10px] font-mono uppercase tracking-wider font-semibold ${
+                          isActive ? 'text-gold-400' : 'text-gold-600'
+                        }`}>
+                          {item.tag}
+                        </span>
+                        <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded ${
+                          isActive ? 'bg-gold-500/20 text-gold-300' : 'bg-slate-100 text-slate-600'
+                        }`}>
+                          {item.duration}
+                        </span>
+                      </div>
+                      <p className={`text-xs font-serif font-bold line-clamp-2 leading-snug my-1 ${
+                        isActive ? 'text-gold-100' : 'text-navy-900'
+                      }`}>
+                        {item.title}
+                      </p>
+                      <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-[10px] font-mono">
+                        <Play className={`h-3 w-3 ${isActive ? 'text-gold-400 fill-gold-400' : 'text-slate-400'}`} />
+                        <span className={isActive ? 'text-gold-300 font-medium' : 'text-slate-500'}>
+                          {isActive ? 'Now Playing' : 'Click to Play'}
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
 
-  {/* Second Video */}
-  <div>
-    <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
-
-      <video
-        src={caseBriefingTwo}
-        controls
-        muted
-        playsInline
-        preload="auto"
-        className="w-full aspect-video object-cover"
-      >
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
-      New Media Commentary / Legal Briefing
-    </span>
-  </div>
-
-  {/* Third Video */}
-  <div>
-    <div className="relative w-full max-w-2xl mx-auto bg-navy-950 rounded-lg overflow-hidden shadow-2xl border border-gold-600/30 group">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-gold-600 via-gold-400 to-gold-600 z-10 pointer-events-none"></div>
-
-      <video
-        src={caseBriefingThree}
-        controls
-        muted
-        playsInline
-        preload="auto"
-        className="w-full aspect-video object-cover"
-      >
-        Your browser does not support the video tag.
-      </video>
-    </div>
-
-    <span className="block text-center text-[11px] font-mono uppercase tracking-wider text-gray-500 mt-3">
-      Chamber Legal Briefing & Commentary
-    </span>
-  </div>
-
-        </div>
+            </div>
         </div>
       </div>
       </section>
