@@ -367,28 +367,30 @@ return (
             </div>
 
             {/* Right Col: Advocate Professional Portrait */}
-            <div className="lg:col-span-5 relative flex flex-col items-center" id="integrity-visual">
-  <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-gold-500 hidden sm:block"></div>
-  <div className="absolute -bottom-3 -right-3 w-16 h-16 border-b-2 border-r-2 border-gold-500 hidden sm:block"></div>
+            <div className="lg:col-span-5 flex flex-col items-center justify-center" id="integrity-visual">
+              <div className="relative max-w-md w-full">
+                <div className="absolute -top-3 -left-3 w-16 h-16 border-t-2 border-l-2 border-gold-500 hidden sm:block pointer-events-none z-10"></div>
+                <div className="absolute -bottom-3 -right-3 w-16 h-16 border-b-2 border-r-2 border-gold-500 hidden sm:block pointer-events-none z-10"></div>
 
-  <img
-    src={advocatePortrait}
-    alt="Advocate K. Thangarasu Portrait"
-    className="w-full max-w-md h-auto rounded shadow-lg border border-gold-200 object-cover"
-    referrerPolicy="no-referrer"
-  />
+                <img
+                  src={advocatePortrait}
+                  alt="Advocate K. Thangarasu Portrait"
+                  className="w-full h-auto rounded shadow-lg border border-gold-200 object-cover relative z-0"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
 
-  {/* Name Below Image */}
-  <div className="mt-5 text-center">
-    <h3 className="text-2xl font-serif font-semibold text-navy-900">
-      K. Thangarasu
-    </h3>
+              {/* Name Below Image */}
+              <div className="mt-5 text-center">
+                <h3 className="text-2xl font-serif font-semibold text-navy-900">
+                  K. Thangarasu
+                </h3>
 
-    <p className="mt-1 text-sm uppercase tracking-[0.25em] text-gold-700">
-      Senior Advocate • Chennai
-    </p>
-  </div>
-</div>
+                <p className="mt-1 text-sm uppercase tracking-[0.25em] text-gold-700">
+                  Senior Advocate • Chennai
+                </p>
+              </div>
+            </div>
 
           </div>
         </div>

@@ -84,10 +84,10 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
             </div>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-6" id="desktop-menu-links">
+          <div className="hidden lg:flex items-center space-x-2 xl:space-x-5" id="desktop-menu-links">
             <button
               onClick={() => handleNavClick('home')}
-              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+              className={`px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
                 activeView === 'home' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
               }`}
             >
@@ -96,7 +96,7 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
 
             <button
               onClick={() => handleNavClick('about')}
-              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+              className={`px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
                 activeView === 'about' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
               }`}
             >
@@ -105,7 +105,7 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
 
             <button
               onClick={() => handleNavClick('advocate-profile')}
-              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+              className={`px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
                 activeView === 'advocate-profile' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
               }`}
             >
@@ -114,7 +114,7 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
 
             <button
               onClick={() => handleNavClick('areas-served')}
-              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+              className={`px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
                 activeView === 'areas-served' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
               }`}
             >
@@ -127,14 +127,14 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
               onMouseLeave={() => setIsServicesDropdownOpen(false)}
             >
               <button
-                className={`flex items-center space-x-1 px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+                className={`flex items-center space-x-1 px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
                   ['civil', 'criminal', 'corporate-adr'].includes(activeView)
                     ? 'text-gold-500'
                     : 'text-gray-200 hover:text-gold-200'
                 }`}
               >
                 <span>Law Services</span>
-                <ChevronDown className="h-4 w-4" />
+                <ChevronDown className="h-3.5 w-3.5" />
               </button>
 
               <AnimatePresence>
@@ -181,7 +181,7 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
 
             <button
               onClick={() => handleNavClick('contact')}
-              className={`px-3 py-2 text-sm font-medium tracking-wide transition-colors ${
+              className={`px-2.5 xl:px-3 py-2 text-xs xl:text-sm font-medium tracking-wide transition-colors whitespace-nowrap ${
                 activeView === 'contact' ? 'text-gold-500' : 'text-gray-200 hover:text-gold-200'
               }`}
             >
@@ -189,21 +189,21 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
             </button>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-6" id="nav-right-cta">
+          <div className="hidden lg:flex items-center space-x-4 xl:space-x-6 shrink-0" id="nav-right-cta">
             <a
               href={siteContent.contact.phoneLinks[0]}
-              className="flex items-center space-x-2 text-gold-200 hover:text-gold-100 transition-colors group"
+              className="flex items-center space-x-2 text-gold-200 hover:text-gold-100 transition-colors group whitespace-nowrap"
             >
-              <div className="p-1.5 bg-navy-800 rounded-full group-hover:bg-gold-800/20 transition-colors">
+              <div className="p-1.5 bg-navy-800 rounded-full group-hover:bg-gold-800/20 transition-colors shrink-0">
                 <Phone className="h-4 w-4 text-gold-500" />
               </div>
 
-              <div className="text-right">
-                <span className="block text-[10px] uppercase font-mono tracking-widest text-gold-500/80">
+              <div className="text-right whitespace-nowrap">
+                <span className="block text-[10px] uppercase font-mono tracking-widest text-gold-500/80 whitespace-nowrap">
                   Direct Line
                 </span>
 
-                <span className="block text-sm font-bold font-mono text-gold-200 tracking-wider">
+                <span className="block text-xs xl:text-sm font-bold font-mono text-gold-200 tracking-wider whitespace-nowrap">
                   {siteContent.contact.phoneNumbers[0]}
                 </span>
               </div>
@@ -211,9 +211,9 @@ export default function Navbar({ activeView, setActiveView, onOpenConsultation }
 
             <button
               onClick={onOpenConsultation}
-              className="flex items-center space-x-2 bg-gradient-to-br from-gold-600 to-gold-700 hover:from-gold-500 hover:to-gold-600 active:scale-95 text-navy-950 font-serif font-extrabold text-xs tracking-widest uppercase px-5 py-3 rounded border border-gold-500/30 transition-all cursor-pointer glow-btn-gold"
+              className="flex items-center space-x-2 bg-gradient-to-br from-gold-600 to-gold-700 hover:from-gold-500 hover:to-gold-600 active:scale-95 text-navy-950 font-serif font-extrabold text-[11px] xl:text-xs tracking-wider xl:tracking-widest uppercase px-3.5 xl:px-5 py-2.5 xl:py-3 rounded border border-gold-500/30 transition-all cursor-pointer glow-btn-gold whitespace-nowrap shrink-0"
             >
-              <Calendar className="h-4 w-4" />
+              <Calendar className="h-3.5 w-3.5 xl:h-4 xl:w-4 shrink-0" />
               <span>Book Consultation</span>
             </button>
           </div>
